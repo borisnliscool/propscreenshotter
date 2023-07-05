@@ -1,0 +1,5 @@
+dist
+node_modules
+backup/*.png
+uploads/*.webp
+pnpm-lock.yaml
