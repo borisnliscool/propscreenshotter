@@ -6,6 +6,7 @@
 	"scripts": {
 		"start": "tsc && node dist/index.js",
         "watch": "npx nodemon src/index.ts",
+        "build": "tsc",
 		"lint": "eslint . --ext .ts"
 	},
 	"keywords": [],
