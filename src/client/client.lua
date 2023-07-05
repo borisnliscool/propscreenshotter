@@ -1,4 +1,4 @@
-local url = "http://localhost:3000/"
+local serverUrl = "http://localhost:3000/"
 local distanceMultiplier = 0.9
 
 local camera
@@ -7,7 +7,7 @@ local camera
 ---@return promise
 local function Screenshot(name)
     local Promise = promise.new()
-    local _url = url .. "upload" .. (name and "/" .. name)
+    local _url = serverUrl .. "upload" .. (name and "/" .. name)
     print(_url)
     exports['screenshot-basic']:requestScreenshotUpload(_url, 'image', function(data)
         Promise:resolve(json.decode(data))
@@ -15,11 +15,6 @@ local function Screenshot(name)
     local data = Citizen.Await(Promise)
     return data
 end
-
-RegisterCommand("screen", function(source, args, rawCommand)
-    local data = Screenshot()
-    print(json.encode(data, { indent = true }))
-end, false)
 
 ---@param coords vector3
 ---@return number
@@ -56,8 +51,10 @@ local function ScreenshotModel(name)
     local model = joaat(name)
     lib.requestModel(model)
 
+    -- If you are experiencing artifacts you can try using different coords. 
     -- local coords = vec4(-2500.0, -2500.0, 500.0, 75.0)
     local coords = vec4(-2500.0, -2500.0, 100.0, 75.0)
+
     local object = CreateObject(model, coords.x, coords.y, coords.z, false, true, false)
     SetEntityHeading(object, coords.w)
     FreezeEntityPosition(object, true)
@@ -65,11 +62,8 @@ local function ScreenshotModel(name)
     local min, max = GetModelDimensions(model)
     local distance = GetDistance(min, max)
 
-    -- local camCoords = vec3(coords.x + distance, coords.y - (distance * 2), coords.z + distance)
     local camCoords = vec3(coords.x + distance, coords.y, coords.z + (distance / 1.5))
     SetCamCoord(camera, camCoords.x, camCoords.y, camCoords.z)
-
-    -- PointCamAtEntity(camera, object, 0, 0, (max.z - min.z) / 2, true)
     PointCamAtCoord(camera, coords.x, coords.y, coords.z + (max.z - min.z) / 2)
 
     Wait(500)

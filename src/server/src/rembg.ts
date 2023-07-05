@@ -1,10 +1,12 @@
+const rembgUrl = "http://localhost:5000/api/remove";
+
 export async function RemoveBackground(buffer: Buffer): Promise<Buffer> {
 	const blob = new Blob([buffer]);
 
 	const formData = new FormData();
 	formData.append("file", blob);
 
-	const response = await fetch("http://localhost:5000/api/remove", {
+	const response = await fetch(rembgUrl, {
 		method: "POST",
 		body: formData,
 	});
