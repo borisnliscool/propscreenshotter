@@ -14,6 +14,7 @@ https://github.com/borisnliscool/propscreenshotter/assets/60477582/ae856b9f-9aab
 ### Requirements
 - Typescript
 - pnpm
+- [NodeJS v18](https://nodejs.org/)
 - [screenshot-basic](https://github.com/citizenfx/screenshot-basic)
 - [rembg](https://github.com/danielgatis/rembg) at port 5000
 
